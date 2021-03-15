@@ -149,6 +149,83 @@ Cover the tracks: Delete traces of ever being on the systems you attacked.
 - Data Breach
 - Malware/Ransomware infections
 
+
+## Module: Attackers
+
+### Organized Crime
+
+A group of professional cyber criminals who use the internet for unlawful activities, including corporate espionage. 
+
+### State Affiliated
+
+An inidividual or group associated with a global government that attacks to disrupt or compromise governments, organizations, or individuals.
+
+### Evil SysAdmin
+
+If a Sysadmin decides to go rogue.
+
+### Hacktivists
+
+An inidividual or loosely organized group whose activity is aimed at promoting a social or political cause.
+
+### Insiders
+
+Employees, Contractors, or partners that carry out criminal activity using legitimate access. Although they are not necessarily system admins, could be anyone.
+
+
+### White, Gray, Black Hat Hackers
+
+- White Hat : has skills and they use it to help organizations. Like Security consultants.
+- Black Hat : has skills to break into systems, use it for illegal activity.
+- Gray Hat :  has skills to break into systems, and use it for legal and illegal stuff. Hard to identify these people.
+
+
+### Depths of Internet
+
+- Surface Net : Usual internet we all use.
+- Deep Net : Internet that's not(can't be) indexed by a search engine.
+- Dark Net : Special browser like TOR allow you to access different internet where illegal data from breaches, goods or services are sold/auctioned.
+
+
+### APT - Advanced persistent attack
+
+Cyberattack executed by criminals, or nation-states with the intent to steal data or surveil systems over an extended period of time, with specific goal and target and which has spent time and resources to identify which vulnerabilities they can exploit, to gain access and design an attack that will likely remain undetected for a long time.
+
+- Funded by global government
+- Target specific industry or econonomical sectors
+- Utilize public and non-public malware families(writing their own malware)
+- Specific attack vectors/patterns they could follow, help us identify them
+
+
+
+## Module: Data Breaches
+
+An event where confidential data has been accessed, viewed, stolen by an unauthorized individual. 
+
+Impacts: 
+- Data Loss
+- Breach Cleanup/Recovery cost
+- Revenue impact
+- Reputational damage
+
+
+Common Path:
+
+Research the target ---> Attack ---> Exfiltration
+
+### How to prevent breaches
+
+- Patch software with updates in timely manner
+- External web application testing is a must for all public facing applications
+- Own your failures as quickly as possible and fix it
+- Unprotected data collections should never be attached to a public server
+
+
+
+## Module: Security Business Case
+
+
+
 ## Module: Privacy vs Security and Customer Data Protection
 
 ### Security vs Privacy:
