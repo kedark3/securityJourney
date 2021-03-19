@@ -355,6 +355,77 @@ Excuses for 'security' and the 'proper' response:
 - Defenders have to Secure any potential attack/
 
 
+## Module: Software Supply Chain Security
+
+Open source and third-party software is everywhere nowadays.
+
+- Open Source: Code made available to be usec freely under some licensing terms.
+- Third Party software: Reusable software either freely distributed or sold by and entity other than the originial developer.
+
+* **Challenges**: 
+  - Poor or no security testing at all
+  - Malicious code insertion
+  - Dormant vulnerabilities
+  - Community support does not always result in regular patches
+
+
+* **Software Supply chain consists of**: 
+    - Code, libs, dev tools as input
+    - Stages:
+    
+            commits
+            builds
+            test
+            stage
+            deploy
+    - Output: Web Server, App on App Stores, Downloadable content from a site.
+
+    Attackers could compromise libs, dev tools. Like Jenkins has had vulnerabilities too.
+
+* **Software supply chain priorities**:
+  - Choose fewer and better component suppliers: when choosing open source component, simplify and try to get it from known sources.
+  - Choose Quality components: Use active projects, not someone's weekend project that is not been updated in a while.
+  - Track and monitor where open source components are used
+  - Automate processes and security during the development lifecycle.
+
+
+* **Determine if a component is good**: 
+  - Does the project have a website? - meaning they really care about the product.
+  - What language is it written in?
+  - What's the CVE history of the component? Do you have any trackable information about past bugs?
+  - How many people contributed to it in last 12 months? 
+  - How old is the component?
+  - Mean time to update vs. Mean time to Remediate
+
+* **Not your code, but it is your product**:
+  - Assume components in open source are/may not secure by default and be proactive.
+  - If you put it in your product, it is your responsibility to fix security issues, even if it is a open source software.
+  - Update early and often
+
+
+
+## Module: Security Mindset and Culture
+
+Friday@5pm : If you have code to release and you find an issue, do you push it or not? If you do push it, because of release pressure, you have a weak security culture.
+
+Security culture is strong when everyone thinks like a security person, responsible, and act like one.
+
+**Security culture plan**:
+- Everyone is security person.
+- We start security left and right, in every phase of development.
+- We examine our software supply chain for vulnerabilities.
+- We use security tools to expand our capabilities through automation.
+- We attempt to break the software we create.
+
+
+**Security Mindset**:
+- Knowlege of Security, attacks and attackers
+- Realization that attacks are real and we are under attack
+- Perspective: examine the world from attacker's point of view.
+- Action: Embrace your role as builder, breaker or defender of your product and give your best.
+
+
+
 
 ## Module: Privacy vs Security and Customer Data Protection
 
