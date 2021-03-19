@@ -224,6 +224,136 @@ Research the target ---> Attack ---> Exfiltration
 
 ## Module: Security Business Case
 
+Shift Left: Security is built into the process and desgined into the application at an earlier stage of the development lifcycle.
+
+Shift Right: Is obtaining visibility into how applications and APIs are attacked and abused in production.
+
+Start left and start right = secure development lifecycle - what's old is new again.
+
+Cost to fix a bug earlier is lower. After release it could be upto 30x more than what it was when you are still gathering requirements.
+
+
+Excuses for 'security' and the 'proper' response: 
+
+- I don't have resources, response: you will need more resources when a vulnerability is found after release.
+- Need to ship product, response: you need to ship a secure product
+- Competitive pressure, other companies coming to market before us, response: You should release secure product and differentiate yourself over your competition using that fact.
+- Agile/WaterFall/DevOps does not support security, response: 
+
+
+## Module: Security Myths
+
+- Myth1: Security is someone else's problem.
+
+  Fact: It is actually everyone's responsibility.
+
+- Myth2: Nobody would want to attack us.
+
+  Fact: Every computer can be attacked, try plugging a computer into public internet, disable firewall and see for yourself. There are automated port scanners that are constantly looking to leverage open unprotected ports.
+
+- Myth3: Security is expensive.
+
+  Fact: Losing customer data is too much more expensive.
+
+- Myth4: No one will ever do that, or think of that method to attack us.
+
+  Fact: Attackers will always to something you did not expect. Expect the unexpected. Build layers of security.
+
+- Myth5: Only critical apps require security.
+  
+  Fact: All applications need security. Attackers are gonna look at non-critical apps(weak links) to gain access.
+
+- Myth6: Compliance==Security
+
+  Fact: Compliance != Security. Compliance can't be always adequate to protect against all attacks.
+
+- Myth7: Single incident does little damage.
+
+  Fact: Every incident can cause huge damage. More so if it involves customer data.
+
+- Myth8: The firewall will protect us.
+
+  Fact: The app must have its own security built in. Firewall can only prevent traffic from certain sources. But attackers can use authorized source to find different weakness in your app to attack it. Example would be SQLInjection, Cross-site request forgery, etc.
+
+- Myth9: We have TLS; therefore we are secure.
+
+  Fact: TLS protects confidentiality/integrity only for traffic being transported across the wire.
+
+- Myth10: We have security through obscurity.
+
+  Fact: Attackers can easily find hidden things too. That's their thing.
+
+- Myth11: Security is solved with tools.
+  
+  Fact: Tools are fine but not the total answer. 
+
+- Myth12: Penetration testing or scanning solves all security woes.
+
+  Fact: Testing is necessary, but you cannot hack yourself secure.
+
+
+
+## Module: Threat Landscape
+
+
+**IoT devices**: Home Automation, Automobiles, Smart Meters, Insulin Pumps(or other medical devices). These devices add to the threat landsape in the current era.
+  - Lack of updatability, as some IoT devices don't have update mechanism, so in case of a vulnerability you only can buy a newer product to replace existing one.
+  - Some companies lack of security, like cameras etc.
+
+
+**Cloud**: Ownership of data, responsibility for securing the data, multi-tenancy, insecure storage buckets.
+  - Data breach
+  - System vulnerabilities of underlying hardware of cloud providers
+  - Multi-tenancy
+
+**Mobile**: Threats extend to the user population, a less savvy group then corporate. Massive number of devices.
+  - Phishing
+  - BYOD - Bring your own Device employers
+  - Corrupt App Stores
+
+
+### Newer internet security: 
+
+**Crypto Jacking**: There are attackers that try to break into other computers trying to find crypto currency.
+
+**Supply-chain attacks**: Trying to modify libraries and push those as updates and users suddenly end up with vulnerable version of the code.
+
+**Hardware attacks**: Hardware is now being targeted as new way of attack, like finding CPU vulnerabilities e.g. Meltdown, Spectre.
+
+
+### Other weaknesses:
+
+- Weak or poorly implemented cryptography/encryption
+- Unencrypted data at rest on harddrives.
+- Weak authentication:
+  - No enforcement of password or strength
+  - Failure to enforce acount lock outs
+  - Lack of encryption in transit to protect auth data
+  - Weak password hash storage
+
+
+### Other threats:
+
+- Data breach:
+  - Accidental disclosure, like sending wrong file to wrong person or other accidents.
+  - Improper access control to the systems
+  - Web application attacks
+
+- APIs: 
+  - Open in a controlled manner, standardize access methods, protect against scraping
+  - Lack of security features
+  - API's have access to everything
+
+- Denial of service:
+  - Single packet, in which attacker finds out vulnerability in application that makes application go in non-responsive state when a certain kind of data packet is sent.
+  - Volumetric Attack, in which attacker sends loads and loads of data to make application so busy with useless traffic that it stops serving genuine customers.
+
+
+### Defenders Dilemma
+
+- Attackers have to only find one vulnerability
+- Defenders have to Secure any potential attack/
+
 
 
 ## Module: Privacy vs Security and Customer Data Protection
