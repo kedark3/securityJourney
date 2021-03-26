@@ -425,7 +425,118 @@ Security culture is strong when everyone thinks like a security person, responsi
 - Action: Embrace your role as builder, breaker or defender of your product and give your best.
 
 
+## Module: Prioritizing Security
 
+**Reasons:**
+  
+  It is non-negotiable for customers, every customer cares and expects it
+  
+  Vulnerabilities continue to rise
+  
+  Competetive advantage
+
+__Job Description Augmentation to Prioritize Security:__
+
+- **Developers:**
+  - Write secure code by applying secure design principles
+  - Identify code errors and fix
+  - Identify common types of weaknesses and vulnerabilities
+  - Identify security problems in code written by others during review
+  - Use source code auditing tools to discover problems
+  - Perform threat modeling
+
+
+- **Tester:**
+  - Find security Bugs
+  - Scan for vulnerabilities
+  - Use penetration testing skills
+  - Break the thing you test
+  - correctly use security tools
+  - Identify common types of weaknesses and vulnerabilities
+  - Execute security tests all the time
+  - Attack the offering using your mind
+  - Test like a security person
+
+- **People Managers:**
+  - Lead your team to improve security
+  - Allocate proper resources for security
+  - Take the training that you ask your team to take
+  - Understand & share secure design principles with your team
+  - Grasp the basics of cryptography
+
+
+- **Product/Program Managers:**
+  - Add security to requirements
+  - Drive security into the product application dev lifecycle.
+  - SHare security product/application vision with the customers
+
+- **Executives:**
+  - Instill the importance of security in your whole team
+  - Embed security discussions into your operational reviews
+  - Lead by example -- take a training you ask teams to complete
+  - Discuss the importance of security amongst your peers
+  - Champion security metrics amongst your peers
+
+
+## Module: Translating Security
+
+|Executives |Security translation  | 
+--- | --- |
+|Risk Mitigation|Risk assement, mitigation and limitation|
+|Customer Satisfaction|Security as an enabler customer satisfaction|
+|Revenue generation|Enablement of revenue capture through security investment|
+|Return on investment|Result of security spend|
+
+
+
+|Program/Product Managers |Security translation  | 
+--- | --- |
+|Requirements|Security Requirements in the standard process|
+|Product lifecycle|Secure Development lifecycle|
+|Roadmap and Strategy|A plan for more secure app/product in the future|
+|Bugs,Defects|Fixing and limiting vulnerabilities|
+|Release Management|Prioritizing security Features|
+|KPIs|Tracking security metrics|
+|Go to market|Go to market securely and share security vision w/customers|
+|Stories| The customer role in security|
+
+|Dev/Test team |Security translation  | 
+--- | --- |
+|Front end/back end|Built-in security|
+|Language and object orientation|Secure coding principles|
+|DevOps and Agile Methodologies|Secure development lifecycle|
+|Frameworks and libraries|Secure frameworks|
+|User experience|User experience|
+|Version Control|Secure repositiories|
+|Bug/defects|Fixing and limiting security vulnerabilities|
+
+
+## Module: Secure Development Lifecycle
+
+SDL standardization organization's approach to security.
+
+
+Benefits:
+- Establishes Security standards
+- Repeatable product security that can be applied to all of the products consistently
+- Reduce development cost over long haul
+- Leads to Reduce vulnerabilities
+
+### SDL Stages
+
+- Education/Training: Level set security knowledge across your org. Achieve it by completing content, use it hands on and help improve security.
+- Security Requirements: Functional description of what we expect. Define these to help teams to build what we expect in the product.
+- Threat Modeling: Identify, analyze and mitigate security issues.
+- Third-party vulnerability risk: Prevent third party vulnerabilities from lasting in production code. Scan for third-party library vulnerabilities and fix it by updating libraries.
+- Automated security test: Validate the security development and confirm the offering has no known vulnerabilities.Static/Dynamic code analysis tools.
+- Penetration Testing: Use skills/knowledge of an attacker and find it in our own product, analyze attack surface, exploit vulnerabilities.
+- Product Security Incident Response Team : Have a team that knows how to respond to vulnerabilities, and help customer with communication to keep them updated on situation and patches.
+
+### Supporting SDL practices
+
+- Metrics: Have metrics to see how SDL activities are working for us.
+- Bug Bounty: Work with security researchers to identify vulnerabilities.
+- Community: Security culture in your company.
 
 ## Module: Privacy vs Security and Customer Data Protection
 
@@ -499,8 +610,53 @@ Protecting privacy and customer data
 
 ## Module: Dealing with Vulnerabilities
 
-Value of a Response process
-
-Why researchers hunt for vulnerabilities
-
 PSIRT Process and reasons for its success
+
+
+### PSIRT - Product Security Incident Response Team
+
+- Team that is responsible to manage, investigate, acknowledge, report security vulnerability.
+- This kind of Team is required as new vulnerabilities come out each day, and customers need notifications as well as fixes,  PSIRT can help standardize and coordinate this process.
+
+
+### PSIRT Process
+
+- Intake: 
+  - Receive vulnerability report
+    - from customer,researcher or engineers
+    - via Email, Web form, phone or anonymous
+    - or Sources like forums, social media, underground internet markets
+- Research and Verify
+  - Extract details about exploits
+  - score CVSS to rate how severe it is
+  - Validate it is realy and impacts at least one product or app
+  - Identify the scope
+  - Identify the potential damage to our customers and your company
+- Evaluate and Fix
+  - Work with Engineering team via bugs or emails
+  - Identify products as exploitable or not exploitable for all our portfolio
+  - Work with dev team on fixes and release schedule
+  - Inform teams on what needs to be fixed in the future
+- Communicate: write a report with,
+  - Summary
+  - Workarounds
+  - Affected Products
+  - How to get the Fixed software release
+- Feedback
+  - Helps you make sure we are learning from each incident
+  - Create postmortem and evaluate any process improvements that are needed
+  - Provide feedback to product owner of affected products and to the organization
+
+
+
+### Why researchers hunt for vulnerabilities
+
+- Individuals are usually primary group of people in this category that hunt for vulnerabilities using static/dynamic analysis, reverse engineering, creating PoC exploit code and seek money/fame for the same.
+
+- Secondary group of people is Industry groups, Govt Organizations etc that to similar things.
+
+Responsible Disclosure: It is a period of agreed upon time amongst stakeholders where they agree to not disclose(embargo) vulnerabilities. This is done to protect customers while the companies work to develop and release patch for that vulnerabilities.
+
+### Interesting and Concerning Facts
+- There are vulnerability underground sites like zero-day-dot-today? and Zerodium, where they sell previously undisclosed vulnerability exploits.
+
