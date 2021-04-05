@@ -648,6 +648,12 @@ PSIRT Process and reasons for its success
   - Provide feedback to product owner of affected products and to the organization
 
 
+- Successful response follow up:
+  - Prioritize security: Make good faith report to remediate the issue when you receive report as PSIRT person
+  - Respect finders
+  - Reward Researchers and recognize them
+  - Do no harm to reporter/researcher, value them, don't take advserse actions against them unless its absolutely certainly needed
+
 
 ### Why researchers hunt for vulnerabilities
 
@@ -659,4 +665,137 @@ Responsible Disclosure: It is a period of agreed upon time amongst stakeholders 
 
 ### Interesting and Concerning Facts
 - There are vulnerability underground sites like zero-day-dot-today? and Zerodium, where they sell previously undisclosed vulnerability exploits.
+
+
+
+## Module: Knowledge Sources
+
+Following are resources(websites) that contain information about what to do and not to do while designing software/systems, along with examples, severity, etc. Developers can review this and use it to learn what's the best way to design their software.
+
+- CWE - Common Weaknesses descriptions
+- CAPEC - Attack Patterns
+- ATT&CK by MITRE - Tactics & Techniques
+- NVD - National Vulnerability Database (CVEs from 2002 onward tracked here )
+
+All 4 of those work together, each one building on the top of the former.
+
+- OWASP - Another good resource for awareness docs,tools, process frameworks as open source resource for application security, it is a community of application and software security professionals worldwide that get together in different capacities
+- NIST- National Institute of Standards and Technology - creates security frameworks and guidance on sepcific areas of cybersecurity.
+
+
+
+## Module: OWASP - Open Web Application Security Project
+
+- [OWASP Top-Ten](https://owasp.org/www-project-top-ten/) - Ten most critical web application security risks
+- [OWASP Pro Active Controls](https://owasp.org/www-project-proactive-controls/) - Awareness document aimed at developers
+- [OWASP Cheatsheet](https://cheatsheetseries.owasp.org/)
+- [Juice Shop](https://owasp.org/www-project-juice-shop/) - Intentionally insecure apps that are written to allow you practice breaking security and learn how to prevent it
+- [Application Security Verification Standard](https://owasp.org/www-project-application-security-verification-standard/)
+- [Code Review Guide](https://owasp.org/www-pdf-archive/OWASP_Code_Review_Guide_v2.pdf)
+- [Web Security Testing Guide](https://owasp.org/www-project-web-security-testing-guide/)
+- [ModSecurity Rule Set](https://owasp.org/www-project-modsecurity-core-rule-set/)
+- [Dependency Check](https://owasp.org/www-project-dependency-check)
+- [ZAP](https://owasp.org/www-project-zap)
+- [Threat Dragon](https://owasp.org/www-project-threat-dragon)
+
+
+
+## Module: Security at Home
+
+
+Physical Threats:
+- Theft
+- Vandelism
+- Natural Disasters
+- Assault
+
+Preventative Strategy:
+- Update Locks
+- Consider a Dog
+- Maybe an alarm systems, fence
+- Offsite Backup system
+- Valuables Inventory for insurance purposes
+- Access Security
+
+Reactive Physical Strategies:
+- Lock doors at all times
+- Utilize cameras/alarms
+- Stay aware of people and surrounding
+
+
+CyberSecurity at Home:
+- Home setups are often Insecure
+- Lack of separation by family members - create guest/kids network separately
+- Password reuse
+- Malware
+
+Tips:
+
+Tip1: Updates and Password
+- Keep software up to date
+- Use password managers
+- Use long strong and unique passwords
+- Enable 2FA
+
+
+Tip2: Secure your home network
+- Enable WPA2/WPA3 encryption
+- Don't share wifi with neighbors
+- Change default router passwords
+
+Tip3: Separate work and personal devices
+- Separation increases safety
+
+Tip4: Encrypt data at rest
+- Windows: BitLocker
+- Mac Users: FileVault
+- Linux: LUKS Encryption
+
+Tip5: Dispose of sensitive Data securely
+
+- Shred anything that has your name or other PII on it.
+
+
+Tip6: Follow your employer's security practices
+- Follow protocols from your work at your home while using devices and internet
+
+
+## Module: Threat Landscape - Cloud
+
+Unique security issues:
+- Ownership of Data
+- Responsibility for securing data
+- Multi-tenancy
+- Internet Accessible Storage
+- Reduced Security visibility and control
+
+5 Buckets of threats:
+- Data breach, loss and leakage
+- Insufficient identity, credential, access and key management
+- Insecure interfaces and APIs
+- System and Infra vulnerabilities/misconfigurations
+- Denial of service
+
+## Module: Trends in Application Security - 2021
+
+To stay ahead of the attacker, be aware of the trends.
+
+Reality of Security:
+- 83% of apps have at least one flaw in them
+- 20% of apps have high-severity flaws
+- 171 - avg number of days to fix flaws
+- 21 days is how fast the top 5% of projects remediate security vulnerabilities in the open source
+- 21,448 - Avg. number of Open Source component releases every day
+- 71% increase in confimed or suspected open source components in data breaches since 2014
+
+
+Trend 1: DevOps is trendy, it is important to include Security in DevOps pipelines.
+
+Trend 2:  Container orchestration has took off, ensure you are aware/scan for vulnerabilities.
+
+Trend 3: Attacking CI/CD is low hanging fruit, especially in 3rd party libraries, also source code in open souce can be maliciously modified. Beware, Jenkins or similar tools can be attacked too.
+
+Trend 4: Privacy by design and Linddun
+
+Trend 5: Software supply chain woes continue e.g. java, npm, ruby so on has had issues with vulnerabilities
 
