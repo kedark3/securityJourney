@@ -67,6 +67,34 @@
     - [Broken Access Control](#broken-access-control)
     - [Security misconfiguration](#security-misconfiguration)
     - [XSS](#xss)
+    - [Insecure Deserialization](#insecure-deserialization)
+    - [Using components with known vulnerabilities](#using-components-with-known-vulnerabilities)
+    - [Insufficient logging and monitoring](#insufficient-logging-and-monitoring)
+  - [Module: Buffer OverFlow and Remote code execution](#module-buffer-overflow-and-remote-code-execution)
+    - [**Buffer OverFlow**](#buffer-overflow)
+    - [Types of Buffer OverFlow](#types-of-buffer-overflow)
+      - [Mitigations](#mitigations)
+    - [**Shell code**](#shell-code)
+  - [Module: Denial of Service](#module-denial-of-service)
+    - [Types of Attacks](#types-of-attacks)
+    - [Mitigations:](#mitigations-1)
+  - [Module: XSS Cross-Site Scripting](#module-xss-cross-site-scripting)
+    - [What is XSS?](#what-is-xss)
+    - [Threats](#threats)
+    - [What is Stored or persistent XSS?](#what-is-stored-or-persistent-xss)
+    - [What is Reflected or non-persistent XSS?](#what-is-reflected-or-non-persistent-xss)
+    - [What is DOM based XSS?](#what-is-dom-based-xss)
+    - [Mitigations](#mitigations-2)
+  - [Module: Injection Attacks](#module-injection-attacks)
+    - [Types:](#types)
+    - [Threats:](#threats-1)
+    - [Mitigation:](#mitigation)
+  - [Module: CSRF - Cross Site request foregery](#module-csrf---cross-site-request-foregery)
+    - [What is CSRF?](#what-is-csrf)
+    - [What is a Synchronizer token (CSRF Token)?](#what-is-a-synchronizer-token-csrf-token)
+    - [What is SameSite cookies?](#what-is-samesite-cookies)
+    - [CSRF Risks](#csrf-risks)
+    - [CSRF Mitigations](#csrf-mitigations)
 
 <!-- /TOC -->
 
@@ -647,3 +675,241 @@ Mitigations:
 - Use frameworks that automatically escape XSS by design
 - Perform contextual output encoding
 - Enable a content security policy (CSP)
+
+
+### Insecure Deserialization
+
+Use of an object from an Untrusted source without proper verification
+
+Risks:
+- Attacker can modify objects and do malicious things
+
+Mitigations:
+- Do not accept serialized objects from untrusted sources
+- Implement digital signature on any serialized objects
+- Enforce strict type constraints during deserialization before object creation
+
+### Using components with known vulnerabilities
+
+If you build your software with a component that has vulnerability at the time of use.
+
+Risks:
+- User doesn't know and care if the issue is with your code or some library you use but someone else writes.
+- Sometimes developers ignore Sev3 issues although attackers have sometimes made use of those.
+
+Mitigations:
+- Inventory versions of components and dependencies using tools
+- Use software composition analysis to automate the process
+- Monitor for libraries and components that are unmaintained or do not create security patches for older versions
+
+
+
+
+### Insufficient logging and monitoring
+
+Lack of logging and monitoring events. E.g. an attacker attempting one user/password combination every X amount of time, until he finally gets the correct creds of some user, that is a big risk. You need to log and monitor for any such patterns.
+
+Risks:
+- If an attack is undetected, there is more likelihood for success. Most attacks start with probing and gathering info which is not caught by application logging.
+- Identifying breaches took avg 191 days in 2016, attacks maybe present within your system long before you realize.
+
+Mitigations:
+- Ensure all login access control failures and server-side input validation failures are logged.
+- Ensure high-value transactions have an audit trail with integrity controls.
+- Establish effective monitoring and alerting.
+
+
+
+## Module: Buffer OverFlow and Remote code execution
+
+
+### **Buffer OverFlow** 
+When a program attempts to put more data into a buffer than it can handle. It could result in an attacker controlling the flow of a program on your computer. With control flow comes the ability to drop to a shell. Dropping to shell is bad.
+
+**Threats**:
+- Execute unauthorized code or commands
+- Privilege Escalation
+- Modify Memory
+- Denial of service
+
+
+### Types of Buffer OverFlow
+
+- Stack based Bufer overflow: Buffer on the program's call stack outside of the intended data structure is overwritten with a new memory address.
+- Heap based Buffer overflow: Buffer in the heap portion of memory is overwritten.
+- Integer Overflow: Buffer storing a value is incremented to a value that is too large to store as an integer which cause the value to wrap and become a very small or negative number.
+
+
+#### Mitigations
+- Use coding language that does not have buffer overflow weakness.
+  - E.g. With C language, use Safe C library
+- Automatically provide a protection mechanism that mitigates or eliminates buffer overflows. 
+- Practice input validation and check buffer sizes before use(hard to do.)
+- Use a CPU and operating system that offers Data Execution Protection(NX).
+- Run code with least of lowest privilege.
+
+### **Shell code**
+
+Small piece of code used as the payload in the exploitation of a software vulnerability
+
+- Local : logged in as local user on some system and try to modify access and attack local system.
+- Remote : Attacker is going to send from some other system
+- Download and Execute : Downlod some malware and execute it on the target system.
+
+
+**RCE - Remote code execution**: When an attacker executes any command on a target machine or in a target process across the Internet.
+
+
+
+## Module: Denial of Service
+
+Renders our product or application unusable. By definition, it is an attempt to make service or network application unusable.
+
+In **Distributed Denial of service** where multiple compromised systems are used to target a single system.
+
+**Threats**:
+- Crashes, exit or restart of systems
+- CPU resource exhaustion
+- Memory resource exhaustion
+- Network or disk resource exhaustion
+
+**Facts about DDoS**:
+- We are in a Terabit attack Era
+- 6.13 million attacks yearly, 16794 attacks daily.
+- Average cost of customer downtime is $221,836.80
+- 91% of enterprises say one or more attacks completely saturated their internet bandwidth.
+
+
+### Types of Attacks
+- Protocol
+- Recursive
+- Volumetric
+- Application Layer
+- Low and slow attack
+- R-U-Dead-Yet(RUDY) attack
+
+
+
+### Mitigations:
+
+- Detection - you can't stop what you can't see.
+- Black hole routing/rate limiting
+- Web app firewall(WAF)
+- Content delivery network: AWS, Akamai, CloudFare
+
+
+
+## Module: XSS Cross-Site Scripting
+
+### What is XSS? 
+
+Malicious code is inserted in your browser by malicious or sometimes benign looking websites. You need to care about it as losing your cookies, session tokens can let attacker access sites as if they were you.
+
+### Threats
+
+- Someone can grab your admin session cookies
+- Rewrite a webpage
+- Redirect to a phishing or malware site
+
+
+### What is Stored or persistent XSS? 
+
+A malicious script is permanently stored, causing a victim to retrieve it when requesting stored information.
+
+- Attacker submits evil javascript to a web app
+- Stored evil JS goes into database
+- User requests a page from that web app
+- User retrieves a page that contains malicious code
+- User falls victim to that evil JS
+
+
+### What is Reflected or non-persistent XSS?
+
+
+An injected script is delivered via an e-mail or other web site and takes the victim to the vulnerable site, which reflects the attack back to the victim's browser.
+- Attacker sends an email with link containing a malicious site
+- User clicks it and downloads a malware by mistake
+- It gets stored in user browser and eventually gets executed
+
+
+### What is DOM based XSS?
+
+Attacker injects a script into DOM(Document object model) environment and executes in the victim's browser.
+
+- Sources : It is a property that is read from the DOM. Example, `document.URL`, `location.href`, `location.search`, etc.
+- Sinks : It is a point in the flow of data where untrusted input gets outputted on the page or executed by JS within the page. Example, `eval`, `setTimeout`, `document.write`, `location.href`
+
+
+### Mitigations
+
+- Use framework that automatically escapes XSS by design
+- Escape untrusted HTTP request data bawsed on the context in the HTML output
+- Apply context sensitive encoding when modifying the browser document on the client side
+- Review client side code for sinks and sources
+- Enable Content Security policy (CSP)
+
+
+
+## Module: Injection Attacks
+
+Tricking an application into including unintended commands in the data sent to an interpreter.
+
+Injection allows an attacker to execute commands within your app or product, outside of your control.
+
+### Types:
+
+- SQL Injection 
+- OS Commands Injection
+- LDAP Injection
+- XSS Injection
+
+
+### Threats:
+
+- Execute unauthorized commands or code
+- Read application data
+- Bypass protection mechanism
+- Modify application data
+
+### Mitigation:
+
+- Perform proper input validation
+- Contextually escape user data
+- LDAP: Use frameworks that automatically protect from injection
+- OS: Avoid calling OS commands directly
+- SQL: Utilize prepared statements with parameterized queries
+
+
+## Module: CSRF - Cross Site request foregery
+
+### What is CSRF? 
+
+An attack that forces an end user to execute unwanted actions on a web application in which they're currently authenticated.
+
+E.g. would be an attacker embed malicious `src` within an `image` tag of http and user is logged into a sensitive app, when this `image` tag is 
+being rendered, it is calling the maclicious `src` and actually executing a harmful action without the user's knowledge.
+
+### What is a Synchronizer token (CSRF Token)?
+
+Whenever any state changing operation is to be performed, a CSRF token is added as a hidden field for forms or within URL, then server can reject any other requests that are not coming from that token for that particular session.
+
+
+### What is SameSite cookies?
+
+It is relatively new and defends against CSRF. You append this to your cookies. Currently not all browsers serve this correctly, so you would set this to `SameSite=Lax` but in the future you will be able to set it to `SameSite=Strict`.
+
+- Strict : Prevent the cookie from being sent by the browser to the target site in all cross-site browsing context, even when following a regular link.
+- Lax : Provides a reasonable balance between security and usability for websites that want to maintain user's logged-in session after the user arrives from an external link.Session cookies are allowed when following a regular link from an external website while blocking it in CSRF-prone request methods(e.g. POST).
+
+ 
+
+ ### CSRF Risks
+
+ - Successful CSRF attack can  force the user to transfer funds, change their email address and so forth.
+ - If the victim is an admin, CSRF can compromise the entire WebApp.
+
+### CSRF Mitigations
+- Include an unpredictable CSRF token with each request.
+- Use framework-provided CSRF defence.
+- Enable `SameSite=Lax` for any cookies.
+
