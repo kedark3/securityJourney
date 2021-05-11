@@ -95,6 +95,18 @@
     - [What is SameSite cookies?](#what-is-samesite-cookies)
     - [CSRF Risks](#csrf-risks)
     - [CSRF Mitigations](#csrf-mitigations)
+  - [Module: Insecure Communications](#module-insecure-communications)
+    - [Mitigations:](#mitigations-3)
+    - [Ciphers choices](#ciphers-choices)
+  - [Module: Social Engineering](#module-social-engineering)
+    - [Social Engineering Process](#social-engineering-process)
+  - [Module: AppSec in an Agile World](#module-appsec-in-an-agile-world)
+    - [Agile Terms:](#agile-terms)
+    - [Highlight from Agile Manifesto](#highlight-from-agile-manifesto)
+    - [Agile principles impacting security](#agile-principles-impacting-security)
+    - [Sprint with Security](#sprint-with-security)
+    - [Definition of Done](#definition-of-done)
+    - [Security focused agile sprint](#security-focused-agile-sprint)
 
 <!-- /TOC -->
 
@@ -912,4 +924,171 @@ It is relatively new and defends against CSRF. You append this to your cookies. 
 - Include an unpredictable CSRF token with each request.
 - Use framework-provided CSRF defence.
 - Enable `SameSite=Lax` for any cookies.
+
+
+
+## Module: Insecure Communications
+
+**Insecure Communication:**  is tranmission of sensitive data in the form of plain text over the any communication medium, which can be sniffed by an attacker.
+**Network Sniffing:** A software can be used to monirot or sniff out the data flowing over computer networks in real time. E.g. Wireshark
+
+
+**Threat:** Developer fails to adequately encrypt network traffic using strong cryptography and customer data is exposed and compromised.
+
+### Mitigations:
+
+- VPN
+- TLS
+  - SSL is no longer considered usable for security.
+  - ALL pages must be served over HTTPS, including CSS, scripts, AJAX, images, POST.
+  - HTTP strict transport security header instructs compatible browsers to use HTTPS even if requested to use HTTP.
+  - Cookies must be marked as secure.
+
+### Ciphers choices
+
+- Key exchanges:
+  - RSA, DH - proceed with caution
+  - ECDH - most secure
+- Authentication:
+  - Use: RSA, ECDSA
+- Bulk Encryption:
+  - Use: AES(128/256 bits), ChaCha20(256), AESGCM(256)
+  - Don't use: DES, RC4, SEED(128), 3DES(168) 
+- Message Authentication:
+  - Use: SHA256, SHA384, AEAD
+  - Don't Use: MD5, SHA1
+
+
+## Module: Social Engineering
+
+Psychological manipulation of people into performing actions or divulging confidential information.
+
+
+**Goals of a human attack:**
+- Trick user to:
+  - Click a link
+  - Telling a secret
+  - Open a door
+
+
+
+|Method |Vector  | 
+--- | --- |
+|Phishing|Emails|
+|Vishing|Phone|
+|Smishing|SMS|
+|Impersonation|In-person|
+
+
+
+**Social engineering tactics:**
+- Baiting
+- Spear phishing
+- Pretexting
+- Shoulder Surfing
+- Quid pro quo
+- Phishing
+- Tailgating
+- Dumpster Driving
+- Whaling 
+
+### Social Engineering Process
+
+- Gather Information - Learn about target
+  - Telephone
+  - Web Search
+  - Social Media
+  - Dumpster driving 
+- Establish Rapport - Engage with them in some conversation so they believe you are genuine
+  - Smiling and eye contact
+  - Connect on the phone
+  - Show family pictures to receptionist
+  - Use a fake profile to build a relationship
+- Exploitation - by asking for some info, or access or favor.
+  - Open a door
+  - Disclose a password
+  - Plugin a USB w/malware
+  - Open an infected attachment
+- Execution - attack is conducted
+
+
+
+## Module: AppSec in an Agile World
+
+### Agile Terms:
+
+* User Story: in consultation with the customer or product owner, the team divides up the work to be done into functional increments.
+* Backlog: Ordered list of items representing everything that may be needed to deliver a specific outcome.
+* Daily review: an opportunity for a team to get together on a regular basis.
+* Incremental development: each successibe version of the product is usable and each builds upon the previous version by adding user-visible functionality.
+* Scrum: a process framework used to manage the product development and other knowledge work.
+* Sprint: Duration of time you use for your work. You should have security built into your each sprint and also have a sprint focused on security every 3-6 sprints.
+
+### Highlight from Agile Manifesto
+
+* Individuals and interactions over proceses and tools
+* Working software over comprehensive documentation
+* Customer collaboration over contract negotiation
+* Responding to change over following a plan
+
+
+### Agile principles impacting security
+
+
+* Principle 1: Our highest priority is to satisfy the customer through early and continuous delivery of valuable software
+  * W/security: Secure software satisfies customers.
+* Principle 2: Welcome changing requirements, even late in development. Agile processes harness change for customer's competitive advantage.
+  * w/Security: Flexible security activities that quickly include new work.
+* Principle 3: Deliver working software frequently, from couple of weeks to a couple of months with a preference to shorter timescale.
+  * w/Security: Automation of security tools is mandatory to move faster.
+* Principle 4: Business people and developer should work together on daily basis.
+  * w/Security: make sure to include security team members in this interaction.
+* Principle 5: Build project around motivated individuals. Give them the environment and support they need, and trust them to get the job done.
+  * w/Security: knowledge of security allows building of security trust.
+* Principle 6: The most efficient and effective method of conveying information to and within a dev team is face-to-face convo.
+  * w/Security: Use security champions as well during all conversations.
+* Principle 7: Working software is the primary measure of progress.
+  * w/Security: Basic security features and functionality must be included.
+* Principle 8: Agile processes promote sustainable development. Team members should be able to maintain a constant pace indefinitely.
+  * w/Security: Security champions help maintain a constant pace, while considering security.
+* Principle 9: Continuous attention to technical excellence and good design enhances agility.
+  * w/Security: Threat modeling improves design.
+* Principle 10: Simplicity -- art of maximixing the amount of work not done -- is essential.
+  * w/Security: Keep it simple is good advice for application security.
+* Principle 11: The best architectures, requirements and designs emerge from self-organizing teams.
+  * w/Security: Autonomy and individuality of a scrum team(security choices) requires strong security culture.
+* Principle 12: At regular intervals, the team reflects on how to become more effective, then tunes and adjusts its behavior accordingly.
+  * W/security: Security must participate as part of the feedback process.
+
+
+### Sprint with Security
+
+1. Plan: Security requirements for the features are captured in the user stories.
+2. Development: 
+   1. Threat modeling and mitigation
+   2. Secure coding
+   3. Security code review
+   4. Static analysis
+3. Test:
+   1. Dynamic analysis
+   2. Vulnerability scanning
+4. Deploy:
+   1. 3rd party software
+   2. PSIRT
+
+
+### Definition of Done
+
+Agreed upon list of activities deemed necessary to get a product increment, usually represented by a user story, to a done state by the end of a sprint.
+
+- Threat modeled
+- Security code review complete
+- Code complete 
+- Unit tests written and executed
+- Integration tested
+- Performance tested
+- Security tested(static, dynamic and vulnerability)
+
+
+### Security focused agile sprint
 
