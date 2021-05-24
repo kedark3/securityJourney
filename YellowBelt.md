@@ -107,6 +107,22 @@
     - [Sprint with Security](#sprint-with-security)
     - [Definition of Done](#definition-of-done)
     - [Security focused agile sprint](#security-focused-agile-sprint)
+  - [Module: AppSec in DevOps World](#module-appsec-in-devops-world)
+    - [DevSecOps](#devsecops)
+  - [Module: Security behaviors for DevOps](#module-security-behaviors-for-devops)
+    - [Security Behaviors and Habits](#security-behaviors-and-habits)
+  - [Module: Writing Security Requirements](#module-writing-security-requirements)
+    - [Uses:](#uses)
+    - [The positive impact of security requirements](#the-positive-impact-of-security-requirements)
+    - [Sources for Security Requirements](#sources-for-security-requirements)
+    - [Three Phases of security requirements](#three-phases-of-security-requirements)
+  - [Module: Threat Modeling Basics](#module-threat-modeling-basics)
+    - [Benefits:](#benefits)
+    - [Security Feedback loop](#security-feedback-loop)
+    - [Threat Modeling in the SDL](#threat-modeling-in-the-sdl)
+    - [Threat Modeling Process](#threat-modeling-process)
+    - [A "good" Threat Model](#a-good-threat-model)
+    - [Threat Modeling Tools](#threat-modeling-tools)
 
 <!-- /TOC -->
 
@@ -1091,4 +1107,152 @@ Agreed upon list of activities deemed necessary to get a product increment, usua
 
 
 ### Security focused agile sprint
+
+1. Plan: 
+   1. Privacy assessment
+   2. Product Security baseline review
+   3. Attack surface reduction
+2. Dev:
+   1. Incident response plan
+3. Test:
+   1. Penetration testing
+4. Deploy:
+   1. PSIRT
+
+
+
+## Module: AppSec in DevOps World
+
+* Continuous Integration - Keep integrating your code to main repo frequently
+* Continuous Delivery - automatically build, tested and prepared for a release to production
+* Continuous Deployment - all changes to a testing and/or prod environment after the build and test phases are green
+
+* Continuous Security - this is not defined properly but needs to be integrated. DevSecOps/SecDevOps or whatever you call it.
+
+### DevSecOps
+
+* Plan - Integrate security best practices/requirements into your plan phase.
+* Design - in this phase you should be doing threat modeling.
+* Development -
+  * Secure code review - have someone with security mindsel review your code
+  * software composition analysis - use appropriate tools to analyze the code
+* Integration -
+  * Static analysis - code check for syntax etc
+  * Integration tests - functional/feature based automated security test
+  * Container tests -  Test container builds with our software if security is violated somewhere
+* Delivery -
+  * Dynamic Analysis
+  * Automated Tests - run full suite
+* Deployment - 
+  * Secret injection - Insert keys/passwords etc all.
+* Production -
+  * Vulnerability scanning - for code and infrastructure/networks etc.
+  * Red teaming - Penetration testing
+
+
+## Module: Security behaviors for DevOps
+
+Manner of behaving that decreases danger, risk, threat.
+
+- Clear Start and finish point
+- Why and ROI
+- Easily Repeatable
+- Lightweight
+- Well Defined
+
+Goal is to reach security habits.
+
+
+### Security Behaviors and Habits
+
+* Build security left and starting left - Think about security best practice from the beginning. Habit will be generated when developers know why it matters.
+* Uncover design security problems - Threat modeling, with desired outcome to choose the design decision that protects the confidentiality and integrity of customer data. Habit will be generated when we learn how to create a threat model, start threat modeling by getting hands-on with an active design.
+* React to automated security bugs - Static, Dynamic analysis and vulnerability scanning produces bugs. Desired outcome is to interpret automated security notifications as a gift and not as a curse. Habit generation happens grasp all different types of vulnerabilities that the tools may find. Aggressively limit false positive - do not scan for everything in the beginning.
+* Detect security flaws in others code - Secure code review, use it to find vulnerable pieces in the code. Make this a habit by force security code review in the commit process. Require a +1 from security guru on your team.
+* Work towards eradication of 3rd party software vuln's - 3rd party software dependency checking, eliminate known vuln components at deploy time. Make it a habit to break the build on a sw composition analysis failure
+* Be mean to your code - Red Teaming. Uncover flaws using active testing, fix those flaws and push the fixes to prod ASAP. Make this a habit by realize your code will be attacked, spend time attacking using tools and your brains.
+* Respond in a timely and organized fashion - PSIRT. Partnership between dev and PSIRT to alleviate any security bugs in the shortest amount of time possible. Habit is made when you recognize the PSIRT mission, meet with customer and hear first hand why security matters.
+
+
+
+## Module: Writing Security Requirements
+
+### Uses:
+1) Guidance/Best practices - checklist of what to build into security controls
+2) Metric - A yardstick to assess and measure the degree of trust that can be places in a product or application
+3) Procurement vehicle - Specifying security requirements in contracts
+
+### The positive impact of security requirements
+
+1) Basis for roadmap of product/application security improvements
+2) repeatable and standard security
+3) Clearly define what developers, system architects and designers need to build
+
+### Sources for Security Requirements
+
+* Industry Standards: Common Criteria, NIST, FIPS 140-2, App Security Verification standard, pci DSS compliance
+* Applicable Laws: HIPAA, General Data Protection Regulation(GDPR)
+* History: Heartbleed, SSLv3, shell shock
+
+### Three Phases of security requirements
+
+* Discovery and selection
+* Investigation and documentation
+* Implementation, test and measurement
+
+
+## Module: Threat Modeling Basics
+
+Apporach for analyzing the desing of a feature, application, or product and eliminating potential security flaws. This helps having fewer security bugs upto and after the release.
+
+### Benefits:
+1) Ensures that application security is built into the product as it's being developed.
+2) Security problems are found and fixed early in the development process.
+3) The security mideset is encouraged in developers and testers.
+
+### Security Feedback loop
+
+* Identify Threats
+* Evaluate Mitigations
+* Change the design
+
+And then start over.
+
+### Threat Modeling in the SDL
+
+* Training
+* Requirements
+* Design
+* Develop
+* Test
+* Release
+
+### Threat Modeling Process
+
+* Define Scope
+* Draw diagrams or write down what you are modeling
+* Analyze each item your wrote/drew
+* Mitigate
+* Document
+
+
+### A "good" Threat Model
+* Threat Model is not an exact science
+* Threat Model is experience based
+* Perfect is the enemy of good
+* Threat modeling expands the mind
+* Threat model is an iterative process
+* Threat model is never done
+* Re-visit threat model at appropriate frequency
+
+### Threat Modeling Tools
+
+* White Boards (old school)
+* Microsoft TM Tool
+* IriusRisk
+
+
+
+
+
 
