@@ -123,6 +123,34 @@
     - [Threat Modeling Process](#threat-modeling-process)
     - [A "good" Threat Model](#a-good-threat-model)
     - [Threat Modeling Tools](#threat-modeling-tools)
+    - [4 questions for threat modeling](#4-questions-for-threat-modeling)
+    - [Threat Prioritization](#threat-prioritization)
+    - [Threat Modeling Examples](#threat-modeling-examples)
+  - [Module: Static Application Security Testing(SAST)](#module-static-application-security-testingsast)
+    - [Benefits](#benefits-1)
+    - [SAST Traits](#sast-traits)
+    - [SAST Use Cases](#sast-use-cases)
+    - [Developer Workflow](#developer-workflow)
+  - [Module: Dynamic Application Security Testing (DAST)](#module-dynamic-application-security-testing-dast)
+    - [Benefits:](#benefits-2)
+    - [Traits](#traits)
+    - [Classes of Fuzz finding](#classes-of-fuzz-finding)
+  - [Module: Next Gen AppSec Tools](#module-next-gen-appsec-tools)
+  - [Module: Vulnerability Scanning](#module-vulnerability-scanning)
+    - [Benefits](#benefits-3)
+    - [Traits](#traits-1)
+    - [Process of Vuln Scanning](#process-of-vuln-scanning)
+    - [How does it work?](#how-does-it-work)
+    - [Developer workflow](#developer-workflow-1)
+  - [Module: Penetration Testing and Bug Bounty](#module-penetration-testing-and-bug-bounty)
+    - [Benefits](#benefits-4)
+    - [Pen Testing Process](#pen-testing-process)
+    - [How to choose a pen testing company](#how-to-choose-a-pen-testing-company)
+    - [Bug bounty process](#bug-bounty-process)
+  - [Module: Secure Code Review](#module-secure-code-review)
+    - [Purpose](#purpose)
+    - [Process of secure code review](#process-of-secure-code-review)
+    - [Web Security Code Review Checklist](#web-security-code-review-checklist)
 
 <!-- /TOC -->
 
@@ -1252,7 +1280,288 @@ And then start over.
 * IriusRisk
 
 
+### 4 questions for threat modeling
+
+- What are we building?
+  - Scope - Decide what are we going to threat model? Feature/Function? Subcomponent of a product or the entire product/application? Identify attacker(user/system/hacker), attack surface(network protocols,web interface, system daemon, network packets, cli, administration ).
+  - Draw - Data flow Diagrams. External entity->trust boundary -> Our App Process -> Data store is a typical data flow would look like. Primarily look at trust boundary.
+- What can go wrong? 
+  - Analyze -DFD diagram elements map to each of these (use stride method, initials of each threat below forms the word stride. E.g. S for Spoofing.)
+    - Spoofing
+      - External Entity, Process
+    - Tampering
+      - Process, data store, data flow
+    - Repudiation - Can someone modify any information within your system without anyone noticing?
+      - Process, data store, external entity
+    - Information Disclosure
+      - process, data store, data flow
+    - Denial of Service
+      - - process, data store, data flow
+    - Elevation of Privilege
+      - Process
+- What are we going to do about it?
+  - Mitigate -
+    - Spoofing - Strong Authentication
+    - Tampering - Encryption and hashing of data
+    - Repudiation - logging and strong authentication
+    - Info Disclosure - Encryption
+    - Denial of Service - Site/product scalability
+    - Elevation of privilege - Authorization
+- Did we do a good enough job?
+  - Document - 
+    - Write down mitigations for all threats
+    - Test cases based on discovered threats
+    - Did we do a good enough job?
 
 
 
+### Threat Prioritization
+
+2 Factors:
+- Likelihood - draw a graph with
+  - Y Axis: Easy or Hard to exploit
+  - X Axis: Countermeasures few to many
+- Impact - draw a graph
+  - Y Axis: Customers few->many
+  - X Axis: Damage potential minor->major
+
+E.g. Equation would be:
+Likelihood(high)+impact(high) = High Threat
+Likelihood(medium)+impact(low) = Medium Threat
+Likelihood(low)+impact(low) = Low Threat
+
+
+### Threat Modeling Examples
+
+- Telnet
+  - Prone to:
+    - Tampering as its not a secure protocol
+    - Elevation of Privileges
+    - Spoofing
+    - Information Disclosure
+  - Mitigation:
+    - Use SSH to avoid spoofing
+    - Use SSH also to avoid packet sniffing
+    - Disable Telnetd
+- A typical Web App
+  - Prone to:
+    - Client Side javascript - they can turn off javascript, and security would be broken if its implemented on client side JS
+  - Mitigate:
+    - Perform auth on server side and keep trust boundary on server side
+
+
+## Module: Static Application Security Testing(SAST)
+
+Like a spell checker for your code.
+Set of tech, helps to scan source code and find vulnerabilities. Like an advanced grep for pattern matching the security issues.
+
+SAST is focused on our code(custom code), not underlying libraries, frameworks or other components.
+
+SAST is at Develop phase of secure development lifecycle(SDL). Checking every piece of code being merged to master.
+
+### Benefits
+- Finds critical defects and security vuln in code during development.
+- Identifies problems immediately after code is written, when it is easiest and cheapest to remediate.
+- Automation places the execution on the infra and not on the developers to read it.
+
+### SAST Traits
+
+- White box security testing
+- Finds vuln's early, less expensive to fix
+- Pinpoints exact code location of vuln
+- Misses run time and environmental issues
+- Requires source code
+- Supports most languages
+- Misses design related flaws
+- High number of false positives
+
+### SAST Use Cases
+- One off execution
+- Nightly running SAST
+- CI/CD
+- Running on Desktop/IDE while you are coding
+
+### Developer Workflow
+
+- Scan
+- Triage
+- Fix
+- Document
+
+
+## Module: Dynamic Application Security Testing (DAST)
+
+**Defn**: Set of technologies, and tools to detect vulnerabilities while application is running.
+
+**Fuzzing** is an automated software testing technique that involves providing invalid, unexpected, or random data as input.
+
+**DAST** is focused on all layers of a typical web app, that is custom code, libraries, frameworks, application server, runtime platform. DAST does not applies to other products that are non web-app systems.
+
+**Fuzzing** applies to Products or web application, and applies to layers of custom-code, libraries and Frameworks/packages.
+
+DAST and fuzzing sit in between Develop and Test phase, but mostly people do it in testing phase. They could run one off, nightly or within CI/CD process.
+
+### Benefits:
+
+1) Find critical defects, security weakness and vuln.
+2) Detect runtime vulns, like misconfig or defects in the business logic.
+3) Quick and simple integration into security program, built with automation in mind.
+4) Fuzz specific: test design is simple/free of preconceptions about system behavior.
+
+
+### Traits
+DAST Fuzz
+
+[x] [x] Blackbox testing
+
+[x] [x] Requires a running application
+
+[x] [x] Finds vuln's toward the end of SDLC; more expensive to fix
+
+[x] [x] Discovers run time and environmental issues
+
+[x] [-] Focus on web app and web services
+
+### Classes of Fuzz finding
+
+- Faults
+  - Vulnerabilities
+  - Unstable States
+  - Undesirable conditions
+  - Crashes
+
+
+## Module: Next Gen AppSec Tools
+
+**IAST:** Interactive application security testing, a solution that assesses application security from within using software instrumentation in test. Primarily focused on WebApp.
+- Runs in test phase
+
+**RASP:** Runtime application self protection, a security technology built or linked into an application that is capable of preventing real-time attacks in production. Runs both with WebApps or Products.
+- Post release - runs at real time
+
+
+**SCA:** Software composition analysis. It is a set of technologies that build an inventory of open source and commercial components and detect known security vulnerabilities in those components. This is focused on WebApp(Libraries and Frameworks) and on product side( libraries and packages too).
+
+**CWPP:** Cloud workflow protection platform. Help you secure virtual machine, serverless, containers in private or public cloud. Integrated into CI/CD process. It applies to all layers of web or system apps, except custom code. So, libraries, frameworks(or packages), application server and runtime platform(OS).
+
+
+## Module: Vulnerability Scanning
+
+Comprehensive evaluation of a system for any exposed vulnerabilities.
+
+Focus is on Application Server and Runtime for webapps and for products(system apps) the scanner focuses on Packages, Application server and operating system.
+
+It fits between test and release phases, although it can run anytime you want. You can scan things in development as well.
+
+### Benefits
+
+- Catch low hanging fruits kind of issues
+- validate patching and hardening program
+- establish security baseline
+- identify known, surface level security issues and misconfigurations
+- find and fix issues before your customers do
+
+### Traits
+- Black box security scanning
+- Focus on infrastructure and system problems(VMs, OS, network devices, cloud)
+- Scans for vulnerability, configuration and compliance problems
+- Continuously updated library of vulnerabilities and configuration checks
+- Can login to a product and scan from inside(credentialed vs non-credentialed scans)
+
+### Process of Vuln Scanning
+
+- Is host alive?
+- Firewall detection
+- TCP/UDP port scan
+- OS Detection
+- TCP/UDP Service Discovery
+- Vuln Assessment
+
+### How does it work?
+
+- You define/tweak policy, scan engine
+- It scans packages, app server and OS
+- Produces the report that a developer can look at and act upon
+
+### Developer workflow
+
+- Define
+- Execute
+- Report
+- Triage
+- Fix/Remediate
+- Re-scan
+
+
+## Module: Penetration Testing and Bug Bounty
+
+**Simulated attack** that is **authorized** to evaluate security of a system or application.
+
+**Bug Bounty** is crowd sourcing initiative that pays security researchers to report security issues.
+
+These two focus on entire systems or web apps.
+
+These two pieces fit post release.
+
+### Benefits
+
+- Find weaknesses that tools and internal team missed
+- Prepare staff to better handle a crisis
+- Identify multiple points of failure in a breach or disclosure
+- Document and remediate vuln
+- Identify lateral and vertical exploitation vuln that may lead to privilege escalation and sensitive data loss
+- Augment existing security testing efforts with external expert resources.
+
+### Pen Testing Process
+
+- Evaluate a pen testing partner(company that will do this for you)
+- Scope and goal setting
+- Discovery
+- Exploitation
+- Documentation and reporting
+
+### How to choose a pen testing company
+
+- Consider real knowledge/track record versus just certification
+- Seek penetration testers(specialists) and not generalists
+- Check the process along with resumes
+- Review example reports to understand recommendation approach
+- Avoid glorified vuln scans
+
+### Bug bounty process
+- Establish goals and set scope
+- Engage participants
+- Review and prioritize submissions
+- pay for the results
+- Fix the problems
+
+## Module: Secure Code Review
+
+Take questions about security and apply those to code review process.
+
+### Purpose
+
+- Refactor
+- Detect and Fix Errors
+- Expose Vulnerabilities
+
+### Process of secure code review
+
+- Analyze
+- Review
+- Triage
+- Remediate
+- Review again
+- Close
+
+
+### Web Security Code Review Checklist
+
+- Data Validation
+- User management and Authentication
+- Session Management
+- Authorization
+- Cryptography
+- Logging and Error Handling
+- Security Configuration
 
