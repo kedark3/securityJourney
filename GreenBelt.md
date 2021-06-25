@@ -32,6 +32,37 @@
       - [Modified images](#modified-images)
       - [Vulnerable components](#vulnerable-components)
     - [Docker Content Trust(DCT)](#docker-content-trustdct)
+    - [Private restricted registries](#private-restricted-registries)
+  - [Module: Docker : Best Practices - Engine](#module-docker--best-practices---engine)
+    - [Harden the docker engine](#harden-the-docker-engine)
+    - [Patch host and Docker](#patch-host-and-docker)
+    - [Employ user defined networks](#employ-user-defined-networks)
+    - [Harden using standards and tools](#harden-using-standards-and-tools)
+    - [Use security Profile](#use-security-profile)
+    - [Limit Resources](#limit-resources)
+    - [Set logging level to at least INFO](#set-logging-level-to-at-least-info)
+    - [Monitor and Audit containers](#monitor-and-audit-containers)
+    - [Run containers in a sandbox](#run-containers-in-a-sandbox)
+  - [Module: Docker: Best Practices - Images](#module-docker-best-practices---images)
+    - [Choose minimal base images](#choose-minimal-base-images)
+    - [Don't build dependencies from source](#dont-build-dependencies-from-source)
+    - [Adopt Fixed tags for immutability](#adopt-fixed-tags-for-immutability)
+    - [Employ COPY instead of ADD](#employ-copy-instead-of-add)
+    - [Utilize a least privilege user](#utilize-a-least-privilege-user)
+    - [Deploy read-only filesystems and volumes](#deploy-read-only-filesystems-and-volumes)
+    - [Protect sensitive information](#protect-sensitive-information)
+    - [Label and lint](#label-and-lint)
+  - [Module: Intro to Kubernetes Security](#module-intro-to-kubernetes-security)
+    - [Kubernetes components](#kubernetes-components)
+    - [Kubernetes high-level architecture](#kubernetes-high-level-architecture)
+    - [Kubernetes security considerations](#kubernetes-security-considerations)
+    - [Securing the cluster](#securing-the-cluster)
+    - [Role based access control](#role-based-access-control)
+    - [Network Policies](#network-policies)
+    - [Namespaces](#namespaces)
+    - [Security and Pod Security Context](#security-and-pod-security-context)
+    - [Encrypting Secrets](#encrypting-secrets)
+    - [Kubernetes Defence in Depth](#kubernetes-defence-in-depth)
 
 
 
@@ -194,6 +225,7 @@ Docker running on single host could be attacked in several ways:
 
 - Look at the images, look at the installed software in that image identify any known vuln
 - Scan for libraries, Frameworks/Packages, Application server, operating system/runtime etc.
+- THey are not that really different from linux host filesystem scanning tools, they try to scan the filesystem for vulnerabilities.
 
 
 ### Threats:
@@ -221,3 +253,186 @@ Docker running on single host could be attacked in several ways:
   - Use `docker trust sign` command
   - Setting DOCKER_CONTENT_TRUST environment variable to `1` prevents users from working with tagged images unless they contain a signature
 
+### Private restricted registries
+
+If you don't have a reliable image signing system, then an alternative is to have a "clean" in-house image registry.
+Every image is evaluated by security team for safety and pinned to their SHA-256 image hashes and these images are created by the company and pushed to this registry.
+
+The CI/CD system ensures that no container image is built from a base that does not satisfy the two properties.
+
+## Module: Docker : Best Practices - Engine
+
+
+### Harden the docker engine
+
+Docker daemon should be bound to a Unix Socket and never to a network port. That prevents anyone on the network to access docker daemon. Docker API is unauthenticated and hence, insecure. When you run container using Docker, try never running anything as `--privileged` option.
+
+### Patch host and Docker
+
+Since docker uses kernel features for isolation, keep the kernel and docker updated with latest security patches.
+
+### Employ user defined networks
+
+You can create networks for various set of containers to be grouped with one another and isolate them from other unwanted containers.
+
+### Harden using standards and tools
+
+Use tools like Docker Benchmark to check if your docker configs match to the best practices.
+
+### Use security Profile
+
+Use SELinux, Seccomp, AppArmor like tools to tighten the security down to secure things even bit more.
+
+### Limit Resources
+
+You should set parameters like `--memory`, `--cpus`, restart, ulimit and so on to restrict resources. That way you can ensure a single container doesn't consume all resources.
+
+
+### Set logging level to at least INFO
+
+Having this set up correctly you can ensure that there is always some information as to why a container stopped working or when something unexpected happens.
+
+### Monitor and Audit containers
+
+THere is a OpenSource project called Falco that was contributed to CNCF. This is a piece of software that stems back to another older tool in which, before containerization came along and got hot, they made a Linux kernel module that basically could audit almost everything going on in the kernel. It's almost like TCP Dump but for your kernel. This tool can leverage that to view what's happening inside your containers so you can see all the things that are happening, the processes being created, interactions with the file system, et cetera. This can be incredibly useful if you have a container that starts doing something weird, or maybe did something weird in the past, and you have records. 
+
+### Run containers in a sandbox
+
+This might sound strange at first because you may think containers are a sandbox, I can use them for security stuff. No, containers are not a security tool. They're a packaging tool. Sometimes you might be packaging up something that you think might be a little untrustworthy. The best thing to do would be running on dedicated hardware. Run it straight in a virtual machine. But sometimes you might need to integrate that with an existing container system. gVisor and Kata Containers are such projects.
+
+In Kata Container's case, they're doing exactly that. They're virtualizing hardware, and you're going to run your container in a very very small lightweight VM.
+
+In gVisor's case, they're not quite virtualizing hardware, but they're creating another Linux kernel that taps into your host operating system kernel and directly issues certain system calls. But there's still this guest operating system kernel, like a virtual machine, but without the hardware emulation in between. 
+
+In both these cases, you're able to run a container more like it's actually in a VM, which gives you that guest Linux kernel as an isolation barrier between it and the rest of the machine. 
+
+
+## Module: Docker: Best Practices - Images
+
+### Choose minimal base images
+
+Less things you have in the image, less chance of things going wrong. Popular images include `FROM scratch`, `Debian:stable-slim` and `alpine linux`
+
+### Don't build dependencies from source
+
+Container vuln scanning software can detect the installed packages and their versioning to tell if something is vulnerable. But if you build from the source, then that could be tricky for tools to scan it effectively and you want to avoid that situation.
+
+### Adopt Fixed tags for immutability
+
+PRevent tags from being overwritten by enabling the immutability option in repository advanced settings.Docker allows you to reference a container image that you want to base your image from, by the name, by labels, or by a shot 256 hashtag. Especially for production deployments, where it's careful that you're going to rebuild the same thing every time, fixing your base image using that tag ensures that any future changes that might occur won't affect you. Now you have to be careful and that you'll also have to make sure you keep that tag up to date. If a vulnerability is discovered on the image you're building off of, and they push out a new version, you need to make sure you're aware of that vulnerability and update your takes, so you're pulling in that new version. But at least this way, you can make sure they are always building on the same base.
+
+
+### Employ COPY instead of ADD
+
+Copy just works with Files and Directories. But for ADD you may get surprised if you use Arbitrary URLs or unpack local archives into the container image. You may not be intending to do that.
+
+
+### Utilize a least privilege user
+
+Enable user namespace support(--userns-remap=default) in docker daemon. Also within your container image, make sure to create an unprivileged image in the container and use that user to run the container.
+
+### Deploy read-only filesystems and volumes
+
+If you know your container shouldn't be writing to the file-system, then why not mount volume as read-only? It helps keep things more secure.
+
+### Protect sensitive information
+
+Keep the secrets out of the images. Inject those sensitive secrets at run time, like K8s secrets, Hashicorp vault. You could also do `multi-stage` build, where in the first stage you need credentials to access some source code repository to pull things down and build it. Then in the second stage, when you make the final image, you can take the outcomes of that build, put them in place, but you don't need to have the credentials included there. Finally, there's the dockerignore file you can use to add patterns for certain files that should never be going in an image, as a sanity check to prevent that from happening. 
+
+### Label and lint
+
+This is making sure that you are providing useful information on your container images via the labels, and that you're catching any obvious mistakes or improvements you can make in the way you could do something with linting tools. Linting tool is going to scan a Docker file and determine if there are any potential challenges in the configuration setup. Maybe you're using something that's deprecated. Maybe you're doing something that could be done in a simpler or less error-prone way; the linting tool will try to point these things out. 
+
+
+
+## Module: Intro to Kubernetes Security
+
+Kubernetes is not a security product. Kubernetes is a piece of software for orchestrating and running containers in a cluster. You can think of it almost more like an operating system. For example, with Linux, it may have several security features built into it, but it's not a security product designed to run stuff. Kubernetes is the same way; it is not a security product.
+
+
+### Kubernetes components
+
+- It is a Cluster
+- It has one or more Master nodes
+- Master node manages Nodes
+- Nodes run pods
+- Containers run inside pods
+- Etcd key-value store acts as a database
+
+
+### Kubernetes high-level architecture
+
+- Client
+  - Kubectl
+- Master Node
+  - API Server
+  - Controller-manager
+  - Scheduler
+  - EtcD
+- Worker Nodes
+  - Kubelet
+  - Kube-proxy
+  - Pods
+    - Containers
+
+### Kubernetes security considerations
+
+- Securing the cluster
+- Role based access control (RBAC)
+- Policies: pod security, network, security context
+- Encrypting secrets
+
+
+### Securing the cluster
+
+- Make sure external networks can't talk to everything in the cluster
+- K8s API should always have proper authentication and authorization set up, things like mutual TLS.
+- Contents of the etcd can be encrypted depending on how you deploy it.
+- On the Worker nodes, it is important that kubelet can only communicate with the master and not something else.
+- Even containers you're running in pods onthe nodes should have security context set up for defining how they're going to be held down.
+
+
+### Role based access control
+
+**Subject + Operation + resources = Policy**
+
+|Subject |Operation  | Resources | Policy | 
+--- | --- | --- | --- |
+|Developer|List|ConfigMap|Administrator|
+|Administrator|create|Jobs|GET|
+|OS Process|Watch|Namespaces|Pods|
+|Pod Process|Get|Pods||
+||Delete|Secrets||
+||Patch|Deployments||
+|||Events||
+|||Nodes||
+|||Services||
+|||CronJobs||
+
+
+### Network Policies
+
+Kubernetes can control what network traffic is coming in and out of individual nodes. You'll be exposing containers that have web services you want to be accessed from the external network, and that will need to be routed and figured out somehow. You probably don't want everything from the external network to connect to anything inside your cluster. Kubernetes network policy can say, here is a set of things, and here are the ways they're allowed to connect out and the way things are allowed to connect into them, bind them together. It's going to take the policies you give it and the service descriptions you give for pods and bake them all down into a set of rules. Every time network traffic is going in or out of one of these pods, it's going to be comparing them against those rules and making sure things match, and if they don't then it's not going through.
+
+### Namespaces
+
+A namespace is a way to segregate a bunch of Kubernetes resources. They could be pods of containers; they could be secrets. The motivation for why you would want to do that boils down to the fact that you're usually running a large number of applications, a large number of things on a Kubernetes cluster. By being able to use namespaces, you're able to segregate different groups of things, applications, from each other so that they can't interact in ways they shouldn't. When we're creating policy, these namespaces can even become useful in how we define it, such as network policy. You can say containers from this namespace are allowed to connect to this database. 
+
+### Security and Pod Security Context
+
+The purpose of running Kubernetes, you want to run containers, and these containers will be run in groups called pods. When you're running software in a container, you have the opportunity to do some of the features the operating system gives you to constrain things a bit. A security context applies to a container; it's a way for you to say we're going to constrain this container in these ways. For example, you could say this container has certain capabilities that are dropped, or we're going to run this container as privileged if we know what we're doing. Likewise, the pod security context is a way you can apply security constraints to the entire pod, all the containers within it. It's a slightly different set of things you can apply that there is some overlap, but the key differentiation here is one applies just to a container, and the other one constraints the entire pod. 
+
+Pod security policy is the other half of the security and pod security context. The contexts are a way for someone deploying a pod to say this is the way I'm going to tighten things down. The pod security policy is a way for the administrators to say, if you're going to be running pods, these are the ways you have to tighten it down, and here are some defaults. They can be set up based on roles, so you can use role-based access control to allow an entity like an admin user to be able to launch a container that could abide by any number of policies. In contrast, there could be a smaller set of policies that everyday users have to comply with. They won't be able to access the admin policy. They're providing defaults, but they're not constraining the containers directly. Instead, they're saying, here are the rules you need to follow. Anything that can't be established by default, when someone goes to deploy their pod, they're going to have to specify in their security or pod security contexts, something that complies with those requirements from the policy. 
+
+
+### Encrypting Secrets
+
+K8s lets you encrypt secrets, so that if someone gets access to EtcD, they can't read the plaintext secrets.The catch to that is it's only as good as the keys, and it's only going to be effective if there aren't ways for someone to ask Kubernetes to give them the secrets. Some of the catches here are if you can deploy a pod, you can request any secret, that's in that namespace. Even if they are encrypted, it doesn't matter. Kubernetes is going to hand them to your containers, and you can run off with them.  If you can hack a worker node in the cluster, the kubelet process has access to all of the secrets. They're talking about trying to tighten this down sometime in the future, but currently, that's where things stand. Once again, they can be encrypted in etcd, but if Kubernetes is going to decrypt them and hand them to you, that's not so great.
+If you're going to do this the right way, use a key management system you integrate with Kubernetes so that the keys can manage and rotate it properly. 
+
+### Kubernetes Defence in Depth
+
+- Securing the cluster
+- Role based access control (RBAC)
+- Policies: pod security, network, security context
+- Encrypting secrets
