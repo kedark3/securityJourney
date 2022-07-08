@@ -669,7 +669,7 @@ Protecting privacy and customer data
 
 **Conduct privacy assessments**: Audit periodically if you need all the data you ask for, if you don’t, then stop asking for it
 
-**Use tokenization**
+**Use tokenization**: It uses an intermediary to keep private data from being publicly exposed
 
 **De-identify data**: like remove names or PII from the data
 
