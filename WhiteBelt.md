@@ -281,13 +281,43 @@ Common Path:
 
 Research the target ---> Attack ---> Exfiltration
 
+Case study: Equifax:
+- lack of patching
+- lateral movement
+- exfiltration
+- lack of disclosure
+
+Lessons learned:
+- patching is key; patch management is hard to do in an Enterprise
+- External Web testing is must fort all public facing applications
+- Own your failures as quickly as possible
+
+Case study: PDL/OxyData:
+- Data found on publicly acessible ElasticSearch server;
+- to this day they do not know who breach the data
+- never attach large database to public server
+
+Lessons learned:
+- Unprotected data collections should never be attached to the public internet (cloud storage buckets AND search services)
+- Data enrichment companies have large amounts of data stored about people and scraped from social media
+- it is possible to have a data breach without attribvution of who is at fault 
+
+Case study: Mariott:
+- discover of rouge admin DB query in a purchased equipment
+- found an encrytped table copy from Guest reservation services
+
+Lessons learned:
+- inherent risk is inherited through the acquisition process
+- IT and Database experts play role in detecitng data breaches
+- Nation states do pursue data breach as a mechanism to profiel and attack citizens of other nations
+
+
 ### How to prevent breaches
 
 - Patch software with updates in timely manner
 - External web application testing is a must for all public facing applications
 - Own your failures as quickly as possible and fix it
 - Unprotected data collections should never be attached to a public server
-
 
 
 ## Module: Security Business Case
@@ -306,7 +336,7 @@ Excuses for 'security' and the 'proper' response:
 - I don't have resources, response: you will need more resources when a vulnerability is found after release.
 - Need to ship product, response: you need to ship a secure product
 - Competitive pressure, other companies coming to market before us, response: You should release secure product and differentiate yourself over your competition using that fact.
-- Agile/WaterFall/DevOps does not support security, response: 
+- Agile/WaterFall/DevOps does not support security, response: every process needs to support security
 
 
 ## Module: Security Myths
